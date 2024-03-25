@@ -1,6 +1,6 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:modeler/view_3d.dart';
 
 void main() {
   runApp(const NanoModelerApp());
@@ -33,12 +33,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // _counter++;
-    });
+  void _showObjectSelectDialog() {
+    setState(() {});
   }
 
   @override
@@ -48,80 +44,12 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
-        child: CustomPaint(
-          painter: DemoPainter(Colors.lime),
-          child: const SizedBox.expand(),
-          // For painting on foreground
-          // foregroundPainter: DemoPainter(),
-        ),
-      ),
+      body: const View3D(),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: _showObjectSelectDialog,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
-  }
-}
-
-class DemoPainter extends CustomPainter {
-  final Color rectColor;
-
-  DemoPainter(this.rectColor);
-
-  var rect = Rect.fromCenter(
-    center: const Offset(250.0, 250.0),
-    width: 200,
-    height: 200,
-  );
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    canvas.drawRect(
-        rect,
-        Paint()
-          ..color = rectColor
-          ..style = PaintingStyle.stroke);
-
-    canvas.drawLine(
-      const Offset(10.0, 50.0),
-      const Offset(100.0, 10.0),
-      Paint()..color = Colors.deepOrange,
-    );
-
-    var vertices = Vertices(VertexMode.triangleStrip, [
-      const Offset(100, 100),
-      const Offset(200, 100),
-      const Offset(350, 300),
-      const Offset(400, 100),
-      const Offset(500, 300),
-      const Offset(700, 200),
-    ]);
-
-    canvas.drawVertices(
-      vertices,
-      BlendMode.plus,
-      Paint()..color = Colors.blue[400]!,
-    );
-
-    canvas.drawPoints(
-        PointMode.points,
-        [
-          const Offset(50, 50),
-          // const Offset(50, 51),
-          // const Offset(51, 51),
-          // const Offset(51, 50),
-        ],
-        Paint()
-          ..color = Colors.black
-          ..strokeWidth = 1
-          ..strokeCap = StrokeCap.square
-          ..isAntiAlias = false);
-  }
-
-  @override
-  bool shouldRepaint(covariant DemoPainter oldDelegate) {
-    return rectColor != oldDelegate.rectColor;
   }
 }
